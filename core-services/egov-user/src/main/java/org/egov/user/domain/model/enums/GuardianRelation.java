@@ -40,6 +40,14 @@
 
 package org.egov.user.domain.model.enums;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public enum GuardianRelation {
-    FATHER, MOTHER, HUSBAND, OTHER,SONOF,DAUGHTEROF,WIFEOF;
+    FATHER, MOTHER, HUSBAND, OTHER,
+    @JsonProperty("Wife of")
+    WIFEOF,
+    @JsonProperty("Son of")
+    SONOF,
+    @JsonProperty("Daughter of")
+    DAUGHTEROF
 }
