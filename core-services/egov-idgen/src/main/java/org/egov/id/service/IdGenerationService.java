@@ -64,6 +64,7 @@ public class IdGenerationService {
     //default count value
     public Integer defaultCount = 1;
 
+    private final String IMC_PROPERTYID_FORMAT = "[ULB][YY][ZONE][WARD][SEQ_EG_PT_PTID]";
 
     /**
      * Description : This method to generate idGenerationResponse
@@ -107,8 +108,8 @@ public class IdGenerationService {
      * @throws Exception
      */
     private List generateIdFromIdRequest(IdRequest idRequest, RequestInfo requestInfo) throws Exception {
-
-        List<String> generatedId = new LinkedList<>();
+ 
+    	List<String> generatedId = new LinkedList<>();
         boolean autoCreateNewSeqFlag = false;
         if (!StringUtils.isEmpty(idRequest.getIdName()))
         {
@@ -128,10 +129,11 @@ public class IdGenerationService {
         if (StringUtils.isEmpty(idRequest.getFormat()))
             throw new CustomException("ID_NOT_FOUND",
                     "No Format is available in the MDMS for the given name and tenant");
-
+		if (idRequest.getFormat().equals(IMC_PROPERTYID_FORMAT)) {
+			return getFormattedIdImc(idRequest, requestInfo, autoCreateNewSeqFlag);
+		}
         return getFormattedId(idRequest, requestInfo,autoCreateNewSeqFlag);
     }
-
 
     /**
      * Description : This method to generate Id when format is unknown and select MDMS or DB.
@@ -453,4 +455,27 @@ public class IdGenerationService {
         return sequenceLists;
     }
 
+    private List getFormattedIdImc(IdRequest idRequest, RequestInfo requestInfo, boolean autoCreateNewSeqFlag) {
+		List<String> idFormatList = new LinkedList();
+		String idFormatImc = idRequest.getFormat();
+		idRequest.setFormat(idFormatImc);
+		String attributeName = idFormatImc.substring(idFormatImc.lastIndexOf('[') + 1, idFormatImc.lastIndexOf(']'));
+		HashMap<String, List<String>> sequences = new HashMap<>();
+		try {
+			if (attributeName.substring(0, 3).equalsIgnoreCase("seq")) {
+				if (!sequences.containsKey(attributeName)) {
+					sequences.put(attributeName,
+							generateSequenceNumber(attributeName, requestInfo, idRequest, autoCreateNewSeqFlag));
+				}
+				idFormatImc = idFormatImc.replace("[" + attributeName + "]", sequences.get(attributeName).get(0));
+				idFormatList.add(idFormatImc);
+			}
+		} catch (Exception e) {
+			if (StringUtils.isEmpty(idFormatImc)) {
+				throw new CustomException("IDGEN_FORMAT_ERROR", "Blank format is not allowed");
+			}
+		}
+		return idFormatList;
+	}
+    
 }
