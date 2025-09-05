@@ -448,10 +448,18 @@ public class IdGenerationService {
             log.error("Error retrieving seq number from DB",ex);
             throw new CustomException("SEQ_NUMBER_ERROR","Error retrieving seq number from existing seq in DB");
         }
+        // Choose padding rule based on format
+        boolean seqLegth = IMC_PROPERTYID_FORMAT.equals(idRequest.getFormat());
+
         for (String seqId : sequenceList) {
-            String seqNumber = String.format("%06d", Integer.parseInt(seqId)).toString();
-            sequenceLists.add(seqNumber.toString());
+            String format = seqLegth ? "%05d" : "%06d";
+            String seqNumber = String.format(format, Integer.parseInt(seqId));
+            sequenceLists.add(seqNumber);
         }
+//        for (String seqId : sequenceList) {
+//            String seqNumber = String.format("%06d", Integer.parseInt(seqId)).toString();
+//            sequenceLists.add(seqNumber.toString());
+//        }
         return sequenceLists;
     }
 
