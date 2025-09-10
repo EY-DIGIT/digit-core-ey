@@ -501,7 +501,7 @@ public class BillServicev2 {
 
 		BigDecimal totalAmountForDemand = BigDecimal.ZERO;
 		
-
+		BigDecimal totalPaidAmount = BigDecimal.ZERO;
 		/*
 		 * Map to store the bill account detail object with TaxHead code
 		 * To accommodate conversion of multiple DemandDetails with same tax head code to single BillAccountDetail
@@ -517,6 +517,9 @@ public class BillServicev2 {
 
 			/* Total tax and collection for the whole demand/bill-detail */
 			totalAmountForDemand = totalAmountForDemand.add(amountForAccDeatil);
+			
+			/* Total  collection / Paid Amount */
+			totalPaidAmount = demandDetail.getCollectionAmount();
 		}
 
 		
@@ -531,6 +534,7 @@ public class BillServicev2 {
 				.toPeriod(endPeriod)
 				.tenantId(tenantId)
 				.additionalDetails(demand.getAdditionalDetails())
+				.amountPaid(totalPaidAmount)
 				.build();
 	}
 
