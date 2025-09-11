@@ -39,6 +39,7 @@ public class OtpSMSRepository {
 
     @Value("${expiry.time.for.otp: 4000}")
     private long maxExecutionTime=2000L;
+    
 
     @Value("${egov.localisation.tenantid.strip.suffix.count}")
     private int tenantIdStripSuffixCount;
@@ -126,8 +127,8 @@ public class OtpSMSRepository {
      
         if (localisedMsgs.isEmpty()) {
             log.info("Localization Service didn't return any msgs so using default...");
-            localisedMsgs.put(LOCALIZATION_KEY_REGISTER_OTP_SMS, "Dear Citizen, Your OTP to complete your mSeva Registration is %s.");
-            localisedMsgs.put(LOCALIZATION_KEY_LOGIN_OTP_SMS, "Dear Citizen, Your Login OTP is %s.");
+            localisedMsgs.put(LOCALIZATION_KEY_REGISTER_OTP_SMS, "आदरणीय नागरिक,आपका OTP है %s। यह OTP 15 मिनट तक मान्य है। कृपया इसे किसी के साथ साझा न करें।– इंदौर नगर निगम");
+            localisedMsgs.put(LOCALIZATION_KEY_LOGIN_OTP_SMS, "आदरणीय नागरिक,आपका OTP है %s। यह OTP 15 मिनट तक मान्य है। कृपया इसे किसी के साथ साझा न करें।– इंदौर नगर निगम");
             localisedMsgs.put(LOCALIZATION_KEY_PWD_RESET_OTP_SMS, "Dear Citizen, Your OTP for recovering password is %s.");
         }
         String message = null;
