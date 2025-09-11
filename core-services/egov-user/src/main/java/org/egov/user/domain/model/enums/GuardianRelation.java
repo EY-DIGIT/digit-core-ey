@@ -49,5 +49,7 @@ public enum GuardianRelation {
     @JsonProperty("Son of")
     SONOF,
     @JsonProperty("Daughter of")
-    DAUGHTEROF
+    DAUGHTEROF,
+    @JsonProperty("Not applicable")
+    NOTAPPLICABLE
 }
