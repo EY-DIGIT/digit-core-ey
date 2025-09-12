@@ -24,7 +24,8 @@ import static java.lang.String.format;
 public class OtpEmailRepository {
 
 	private static final String LOCALIZATION_KEY_LOGIN_SUBJECT_EMAIL = "email.login.otp.sub";
-	private static final String LOCALIZATION_KEY_LOGIN_BODY_EMAIL = "email.login.otp.body";
+//	private static final String LOCALIZATION_KEY_LOGIN_BODY_EMAIL = "email.login.otp.body";
+	private static final String LOCALIZATION_KEY_LOGIN_BODY_EMAIL = "PT_NOTIF_LOGIN_OTP_SEND";
 	private static final String LOCALIZATION_KEY_PWD_RESET_SUBJECT_EMAIL = "email.pwd.reset.otp.sub";
 	private static final String LOCALIZATION_KEY_PWD_RESET_BODY_EMAIL = "email.pwd.reset.otp.body";
 	private static final String PWD_RESET_SUBJECT_EMAIL = 	"Password Reset";
@@ -88,7 +89,7 @@ public class OtpEmailRepository {
 			localisedMessages.put(LOCALIZATION_KEY_PWD_RESET_SUBJECT_EMAIL, "Password Reset");
 			localisedMessages.put(LOCALIZATION_KEY_PWD_RESET_BODY_EMAIL, "Your OTP for recovering password is %s.");
 			localisedMessages.put(LOCALIZATION_KEY_LOGIN_SUBJECT_EMAIL, "Login OTP");
-			localisedMessages.put(LOCALIZATION_KEY_LOGIN_BODY_EMAIL, "Dear Citizen, Your Login OTP is %s.");
+			localisedMessages.put(LOCALIZATION_KEY_LOGIN_BODY_EMAIL, "आदरणीय नागरिक,आपका OTP है %s। यह OTP 15 मिनट तक मान्य है। कृपया इसे किसी के साथ साझा न करें।– इंदौर नगर निगम");
 		}
 		return localisedMessages.get(localizationKey);
 	}

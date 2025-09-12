@@ -72,9 +72,10 @@ public class OtpSMSRepository {
     	
     	  String tenantId = getRequiredTenantId(otpRequest.getTenantId());
           String locale = LOCALIZATION_KEY_LOCALE;
-          if (!StringUtils.isEmpty(otpRequest.getRequestInfo().getMsgId()) && otpRequest.getRequestInfo().getMsgId().split("\\|").length >= 2) {
-  			locale = otpRequest.getRequestInfo().getMsgId().split("\\|")[1];
-  		}
+          //commenting Only working for en_IN local
+//          if (!StringUtils.isEmpty(otpRequest.getRequestInfo().getMsgId()) && otpRequest.getRequestInfo().getMsgId().split("\\|").length >= 2) {
+//  			locale = otpRequest.getRequestInfo().getMsgId().split("\\|")[1];
+//  		}
           
        Map<String, String> localisedMsgs = localizationService.getLocalisedMessages(tenantId, locale , LOCALIZATION_KEY_MODULE_NAME);
       String templateId =null;
