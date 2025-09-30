@@ -66,6 +66,7 @@ public class IdGenerationService {
 
     private final String IMC_PROPERTYID_FORMAT = "[ULB][YY][ZONE][WARD][SEQ_EG_PT_PTID]";
     private final String IMC_ACKID_FORMAT = "IM-PT-[YY]-[MM]-[DD]-[SEQ_EG_PT_ACK]";
+    private final String IMC_RECIEPTID_FORMAT = "RN-PT-[YY]-[MM]-[DD]-[SEQ_COLL_RCPT_NUM]";
 
     /**
      * Description : This method to generate idGenerationResponse
@@ -130,7 +131,7 @@ public class IdGenerationService {
         if (StringUtils.isEmpty(idRequest.getFormat()))
             throw new CustomException("ID_NOT_FOUND",
                     "No Format is available in the MDMS for the given name and tenant");
-		if (idRequest.getFormat().equals(IMC_PROPERTYID_FORMAT) || idRequest.getFormat().equals(IMC_ACKID_FORMAT)) {
+		if (idRequest.getFormat().equals(IMC_PROPERTYID_FORMAT) || idRequest.getFormat().equals(IMC_ACKID_FORMAT) || idRequest.getFormat().equals(IMC_RECIEPTID_FORMAT)) {
 			return getFormattedIdImc(idRequest, requestInfo, autoCreateNewSeqFlag);
 		}
         return getFormattedId(idRequest, requestInfo,autoCreateNewSeqFlag);

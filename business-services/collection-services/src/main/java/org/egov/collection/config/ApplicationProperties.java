@@ -268,6 +268,12 @@ public class ApplicationProperties {
     
     @Value("${is.environment.central.instance}")
     private Boolean isEnvironmentCentralInstance;
+    
+    @Value("${receiptnumber.idname.imc}")
+    private String receiptNumberIdNameImc;
+
+    @Value("${receiptnumber.state.level.format.imc}")
+    private String receiptNumberStateLevelFormatImc;
 
 
 }

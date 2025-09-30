@@ -3,6 +3,8 @@ package org.egov.collection.repository;
 import static org.egov.collection.config.CollectionServiceConstants.COLL_TRANSACTION_FORMAT;
 import static org.egov.collection.config.CollectionServiceConstants.COLL_TRANSACTION_ID_NAME;
 
+import java.time.LocalDate;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,13 +49,15 @@ public class IdGenRepository {
 	    log.debug("Attempting to generate Receipt Number from ID Gen");
 
         if(applicationProperties.isReceiptNumberByService()){
-            idName = idName + businessService.toLowerCase() + "." + applicationProperties.getReceiptNumberIdName();
+            idName = idName + businessService.toLowerCase() + "." + applicationProperties.getReceiptNumberIdNameImc();
         } else{
-            idName = applicationProperties.getReceiptNumberIdName();
-            format = applicationProperties.getReceiptNumberStateLevelFormat();
+            idName = applicationProperties.getReceiptNumberIdNameImc();
+            format = applicationProperties.getReceiptNumberStateLevelFormatImc();
         }
-
-        return getId(requestInfo, tenantId, idName, format, 1);
+        String rcieptNumberSequence = getId(requestInfo, tenantId, idName, format, 1);
+        String recieptId = generateImcRecieptNumber(rcieptNumberSequence);
+        return recieptId;
+//        return getId(requestInfo, tenantId, idName, format, 1);
 	}
 
     public String generateTransactionNumber(RequestInfo requestInfo, String tenantId) {
@@ -90,5 +94,25 @@ public class IdGenRepository {
             log.error("ID Gen Service failure", e);
             throw new org.egov.tracer.model.CustomException("IDGEN_SERVICE_ERROR", "Failed to generate ID, unknown error occurred");
         }
+    }
+    
+    private String generateImcRecieptNumber( String sequence) {
+
+		// YY - last 2 digits of current year
+		String year = String.valueOf(Year.now().getValue()).substring(2);
+
+		// MM - 2-digit month
+		String month = String.format("%02d", LocalDate.now().getMonthValue());
+
+		// DD - 2-digit day
+		String day = String.format("%02d", LocalDate.now().getDayOfMonth());
+
+        // Replace placeholders in sequence
+        String recieptNumber = sequence
+                .replace("[YY]", year)
+                .replace("[MM]", month)
+                .replace("[DD]", day);
+
+        return recieptNumber;
     }
 }
