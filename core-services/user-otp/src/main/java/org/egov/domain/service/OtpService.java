@@ -32,14 +32,18 @@ public class OtpService {
         this.userRepository = userRepository;
     }
 
-    public void sendOtp(OtpRequest otpRequest) {
-        otpRequest.validate();
-        if (otpRequest.isRegistrationRequestType() || otpRequest.isLoginRequestType()) {
-            sendOtpForUserRegistration(otpRequest);
-        } else {
-            sendOtpForPasswordReset(otpRequest);
-        }
-    }
+	public void sendOtp(OtpRequest otpRequest) {
+		otpRequest.validate();
+
+		if (otpRequest.isMFARequestType()) {
+			sendOtpForMFA(otpRequest);
+		}
+		else if (otpRequest.isRegistrationRequestType() || otpRequest.isLoginRequestType()) {
+			sendOtpForUserRegistration(otpRequest);
+		} else {
+			sendOtpForPasswordReset(otpRequest);
+		}
+	}
 
     private void sendOtpForUserRegistration(OtpRequest otpRequest) {
         final User matchingUser = userRepository.fetchUser(otpRequest.getMobileNumber(), otpRequest.getTenantId(),
@@ -82,6 +86,21 @@ public class OtpService {
         } catch (Exception e) {
             log.error("Exception while fetching otp: ", e);
         }
+    }
+    
+    private void sendOtpForMFA(OtpRequest otpRequest) {
+
+
+        final String otpNumber = otpRepository.fetchOtp(otpRequest);
+        //otpSMSSender.send(otpRequest, otpNumber);
+        otpSMSSender.sendIMC(otpRequest, otpNumber);
+        if(!otpRequest.isRegistrationRequestType()) // Because new user doesn't have any email configured
+            try{
+                otpEmailRepository.send(otpRequest.getEmailId(), otpNumber, otpRequest);
+            } catch (Exception ignore){
+                log.warn("Could not send OTP over email");
+            }
+
     }
 
 }

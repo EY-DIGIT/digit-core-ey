@@ -19,6 +19,10 @@ public class OtpRequest {
     private String tenantId;
     private OtpRequestType type;
     private String userType;
+    @Setter
+    private String emailId;
+    
+    
 
     public void validate() {
         if(isTenantIdAbsent()
@@ -51,6 +55,10 @@ public class OtpRequest {
 	
 	public boolean isLoginRequestType() {
     	return OtpRequestType.LOGIN.equals(getType());
+	}
+	
+	public boolean isMFARequestType() {
+    	return OtpRequestType.MFA.equals(getType());
 	}
 
 	public boolean isInvalidType() {

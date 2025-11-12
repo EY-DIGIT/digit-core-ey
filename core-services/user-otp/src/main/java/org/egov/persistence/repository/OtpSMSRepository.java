@@ -136,7 +136,7 @@ public class OtpSMSRepository {
 
         if (otpRequest.isRegistrationRequestType())
             message = localisedMsgs.get(LOCALIZATION_KEY_REGISTER_OTP_SMS);
-        else if (otpRequest.isLoginRequestType())
+        else if (otpRequest.isLoginRequestType() || otpRequest.isMFARequestType())
             message = localisedMsgs.get(LOCALIZATION_KEY_LOGIN_OTP_SMS);
         else
             message = localisedMsgs.get(LOCALIZATION_KEY_PWD_RESET_OTP_SMS);
