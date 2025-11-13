@@ -40,7 +40,9 @@ public class TokenService {
         tokenRequest.validate();
 
         String tenantId = tokenRequest.getTenantId();
-        String originalOtp = randomNumeric(otpConfiguration.getOtpLength());
+       //commenting randomm number generation OTP for MFA TESTING PURPOSE Using OTP :: 123456 
+       //String originalOtp = randomNumeric(otpConfiguration.getOtpLength());
+        String originalOtp = "123456";
         String encryptedOtp = originalOtp;
 
         if (otpConfiguration.isEncryptOTP()){
