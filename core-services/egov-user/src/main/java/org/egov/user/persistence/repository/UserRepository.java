@@ -279,10 +279,11 @@ public class UserRepository {
         }
         updateuserInputs.put("IdentificationMark", user.getIdentificationMark());
         updateuserInputs.put("Locale", user.getLocale());
-        if (null != user.getMobileNumber())
-            updateuserInputs.put("MobileNumber", user.getMobileNumber());
-        else
-            updateuserInputs.put("MobileNumber", oldUser.getMobileNumber());
+//        if (null != user.getMobileNumber())
+//            updateuserInputs.put("MobileNumber", user.getMobileNumber());
+//        else
+//            updateuserInputs.put("MobileNumber", oldUser.getMobileNumber());
+        updateuserInputs.put("MobileNumber", user.getMobileNumber());
         updateuserInputs.put("Name", user.getName());
         updateuserInputs.put("Pan", user.getPan());
 
