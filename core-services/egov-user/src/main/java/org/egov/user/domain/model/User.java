@@ -199,7 +199,7 @@ public class User {
     public void nullifySensitiveFields() {
         username = null;
         type = null;
-        mobileNumber = null;
+   //     mobileNumber = null;
         password = null;
         passwordExpiryDate = null;
         roles = null;
