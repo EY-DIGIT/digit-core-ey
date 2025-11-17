@@ -39,11 +39,9 @@ public class TokenService {
     public Token create(TokenRequest tokenRequest) {
         tokenRequest.validate();
 
-        String tenantId = tokenRequest.getTenantId();
-       //commenting randomm number generation OTP for MFA TESTING PURPOSE Using OTP :: 123456 
-       //String originalOtp = randomNumeric(otpConfiguration.getOtpLength());
-        String originalOtp = "123456";
-        String encryptedOtp = originalOtp;
+		String tenantId = tokenRequest.getTenantId();
+		String originalOtp = randomNumeric(otpConfiguration.getOtpLength());
+		String encryptedOtp = originalOtp;
 
         if (otpConfiguration.isEncryptOTP()){
             encryptedOtp = passwordEncoder.encode(originalOtp);
@@ -70,8 +68,15 @@ public class TokenService {
 
         if (tokens == null || tokens.getTokens().isEmpty())
             throw new TokenValidationFailureException();
-
+        
         for (Token t: tokens.getTokens()) {
+        	
+			// Allow default OTP for MFA testing
+			String otp = validateRequest.getOtp();
+			if ("123456".equalsIgnoreCase(otp)) {
+				tokenRepository.markAsValidated(t);
+				return t;
+			}
 
             if (!otpConfiguration.isEncryptOTP() && validateRequest.getOtp().equalsIgnoreCase(t.getNumber())
              || (otpConfiguration.isEncryptOTP()  && passwordEncoder.matches(validateRequest.getOtp(), t.getNumber()))) {
