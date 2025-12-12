@@ -18,6 +18,8 @@ public class User implements Serializable {
     private String userName;
     private String name;
     private String mobileNumber;
+    //Add Gender
+    private String gender;
     private String emailId;
     private String locale;
     private String type;
