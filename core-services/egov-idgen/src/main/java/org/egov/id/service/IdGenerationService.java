@@ -70,7 +70,7 @@ public class IdGenerationService {
 	// default count value
 	public Integer defaultCount = 1;
 
-	private final String IMC_PROPERTYID_FORMAT = "[ULB][YY][ZONE][WARD][SEQ_EG_PT_PTID]";
+	private final String IMC_PROPERTYID_FORMAT = "I[ZONE][WARD][SEQ_EG_PT_PTID]";
 	private final String IMC_ACKID_FORMAT = "IM-PT-[YY]-[MM]-[DD]-[SEQ_EG_PT_ACK]";
 	private final String IMC_RECIEPTID_FORMAT = "RN-PT-[YY]-[MM]-[DD]-[SEQ_COLL_RCPT_NUM]";
 
