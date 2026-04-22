@@ -2,6 +2,7 @@ package org.egov.pg.service.gateways.easebuzz;
 
 import lombok.extern.slf4j.Slf4j;
 import org.egov.pg.models.Transaction;
+import org.egov.pg.models.Transaction.TxnStatusEnum;
 import org.egov.pg.service.Gateway;
 import org.egov.pg.utils.Utils;
 import org.egov.pg.web.models.User;
@@ -223,9 +224,12 @@ public class EasebuzzGateway implements Gateway {
     		}
     	 
          if (easebuzzResponse.isStatus() && easebuzzResponse != null)
-             status = Transaction.TxnStatusEnum.SUCCESS;
+        	 if(transaction.getStatus().equals(TxnStatusEnum.SUCCESS))
+        		 status = TxnStatusEnum.SUCCESS;
+        	 else 
+                 status = TxnStatusEnum.FAILURE;
          else 
-             status = Transaction.TxnStatusEnum.FAILURE;
+             status = TxnStatusEnum.FAILURE;
   
          return Transaction.builder()
                  .txnId(currentStatus.getTxnId())
