@@ -215,8 +215,9 @@ public class EasebuzzGateway implements Gateway {
     		    if (easebuzzResponse.getMsg() == null || easebuzzResponse.getMsg().isEmpty()) {
     		        throw new IllegalStateException("Easebuzz response 'msg' field is null or empty.");
     		    }
-
+    		    log.info("EazeBuzzResponse : "+ easebuzzResponse);
     		    transaction = easebuzzResponse.getMsg().get(0);
+    		    log.info("Transection : "+ transaction);
     		} catch (Exception e) {
     		   log.error("Error while extracting transaction from Easebuzz response: " + e.getMessage());
     		}
