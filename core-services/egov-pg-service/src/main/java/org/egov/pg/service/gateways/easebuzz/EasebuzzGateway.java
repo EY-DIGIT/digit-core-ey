@@ -224,7 +224,7 @@ public class EasebuzzGateway implements Gateway {
     		}
     	 
          if (easebuzzResponse.isStatus() && easebuzzResponse != null)
-        	 if(transaction.getStatus().equals(TxnStatusEnum.SUCCESS))
+        	 if(transaction.getStatus().equalsIgnoreCase(TxnStatusEnum.SUCCESS.toString()))
         		 status = TxnStatusEnum.SUCCESS;
         	 else 
                  status = TxnStatusEnum.FAILURE;
